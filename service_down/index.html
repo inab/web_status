@@ -25,13 +25,14 @@
 
     img {
       max-width: 400px;
-      margin-bottom: 1.5rem;
+      margin-bottom: 10px;
       border-radius: 10%;
     }
 
     h1 {
       font-size: 2.5rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
+      margin-top: 5px;
     }
 
     h4 {
@@ -49,24 +50,55 @@
       font-weight: bold;
       color: #0056b3;
     }
+
+    .footer-logo {
+      max-height: 40px;
+      padding: 10px 30px;
+    }
+
+    .header-logo {
+      max-height: 100px;
+      padding: 10px 20px;
+      margin-bottom: 0px;
+      border-radius: 25px;
+    }
   </style>
 </head>
 <body>
-  <div class="container">    
+  <div class="container">
+    
     <h1 id="message">The service at <span class="domain" id="domain"></span> is currently unavailable.</h1>
     <div class="image-wrapper">
       <img src="image_service.jpg" alt="Service unavailable">
     </div>
     <h4>We are working on it</h4>
+    <img class="header-logo" id="dynamic-logo" src="" alt="" style="display: none;">
     <p>Please check back later.</p>
   </div>
+  <footer>
+    <img class="footer-logo" src="logos/bsc.png" alt="BSC Logo">
+    <img class="footer-logo" src="logos/elixir.png" alt="INB ELIXIR-ES Logo">
+  </footer>
 
   <script>
-    let domain = window.location.hostname;
-    if (domain === '') {
+    let hostname = window.location.hostname;
+    const dynamicLogo = document.getElementById('dynamic-logo');
+
+    if (hostname === '') {
       document.getElementById('message').innerText = "The service is currently unavailable.";
+      dynamicLogo.style.display = 'none';
     } else {
-      document.getElementById('message').innerHTML = "The service at <span class='domain'>" + domain + "</span> is currently unavailable.";
+      document.getElementById('message').innerHTML = "The service at <span class='domain'>" + hostname + "</span> is currently unavailable.";
+
+      const cleanName = hostname.split('.')[0];
+      const logoPath = 'logos/hosts/' + cleanName + '.png';
+      dynamicLogo.src = logoPath;
+      dynamicLogo.alt = 'Logo for ' + hostname;
+      dynamicLogo.style.display = 'inline-block';
+
+      dynamicLogo.onerror = function() {
+        dynamicLogo.style.display = 'none';
+      };
     }
   </script>
 </body>
