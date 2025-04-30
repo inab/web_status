@@ -62,6 +62,16 @@
       margin-bottom: 0px;
       border-radius: 25px;
     }
+    .left-text {
+      clear:left;
+      display:inline-block;
+      vertical-align: middle;
+    }
+    .right-image {
+      clear:right;
+      display:inline-block;
+      vertical-align: middle;
+    }
   </style>
 </head>
 <body>
@@ -71,34 +81,50 @@
     <div class="image-wrapper">
       <img src="image_service.jpg" alt="Service unavailable">
     </div>
-    <h4>We are working on it</h4>
-    <img class="header-logo" id="dynamic-logo" src="" alt="" style="display: none;">
-    <p>Please check back later.</p>
+    <div class="left-text">
+      <h4>We are working on it</h4>
+      <p>Please check back later.</p>
+    </div>
+    <div class="right-image">
+      <img class="header-logo" id="dynamic-logo" src="" alt="" style="display: none;">
+    </div>
   </div>
   <footer>
     <img class="footer-logo" src="logos/bsc.png" alt="BSC Logo">
     <img class="footer-logo" src="logos/elixir.png" alt="INB ELIXIR-ES Logo">
   </footer>
 
-  <script>
+  <script type="module">
     let hostname = window.location.hostname;
     const dynamicLogo = document.getElementById('dynamic-logo');
+    dynamicLogo.style.display = 'none';
 
     if (hostname === '') {
       document.getElementById('message').innerText = "The service is currently unavailable.";
-      dynamicLogo.style.display = 'none';
     } else {
       document.getElementById('message').innerHTML = "The service at <span class='domain'>" + hostname + "</span> is currently unavailable.";
-
-      const cleanName = hostname.split('.')[0];
-      const logoPath = 'logos/hosts/' + cleanName + '.png';
-      dynamicLogo.src = logoPath;
       dynamicLogo.alt = 'Logo for ' + hostname;
-      dynamicLogo.style.display = 'inline-block';
-
-      dynamicLogo.onerror = function() {
-        dynamicLogo.style.display = 'none';
-      };
+    
+      let dotpos = 0;
+      for(dotpos = hostname.indexOf(".", dotpos)+1; dotpos >= 1; dotpos = hostname.indexOf(".", dotpos)+1) {
+        const logoPath = 'logos/hosts/' + hostname.substr(dotpos) + '.png';
+        const logoURL = new URL(logoPath, window.location).href;
+        try {
+          const response = await fetch(logoURL, {
+              method: "HEAD",
+              mode: "same-origin",
+          });
+          dynamicLogo.style.display = 'inline-block';
+          dynamicLogo.onerror = function() {
+            dynamicLogo.style.display = 'none';
+          };
+          dynamicLogo.src = logoURL;
+          break;
+        } catch(error) {
+          console.log("No logo for " + hostname.substr(dotpos));
+          console.error(error);
+        }
+      }
     }
   </script>
 </body>
