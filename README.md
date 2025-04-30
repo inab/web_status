@@ -1,6 +1,6 @@
 # Web Status Page
 
-This repository contains a static HTML page to be used as a generic **"Service Unavailable"** placeholder for StarLife or INB/ELIXIR-ES services that are temporarily down or discontinued.
+This repository contains a static HTML page to be used as a generic **"Service Unavailable"** placeholder for INB/ELIXIR-ES services that are temporarily down or discontinued.
 
 It is a self-contained static page, requiring no backend, and is designed to:
 
