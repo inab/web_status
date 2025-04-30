@@ -25,7 +25,6 @@ For example:
 
 ## 🗂 Directory structure
 <pre>
-``` 
 .
 ├── index.html
 ├── image_service.jpg
@@ -36,7 +35,6 @@ For example:
         ├── inb-elixir.es.png
         ├── openebench.bsc.es.png
         └── ...
-```
 </pre>
 
 ### 🙌 Acknowledgments
@@ -45,4 +43,4 @@ For example:
 
 - INB / ELIXIR-ES
 
-- And everyone maintaining services that occasionally need a nap 😴
+- And to all the servers that occasionally need a nap 😴
