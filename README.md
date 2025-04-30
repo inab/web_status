@@ -37,7 +37,7 @@ For example:
         └── ...
 </pre>
 
-### 🙌 Acknowledgments
+## 🙌 Acknowledgments
 
 - Barcelona Supercomputing Center (BSC)
 
