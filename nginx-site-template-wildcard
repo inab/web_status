@@ -18,7 +18,7 @@
 
 # Default server configuration
 #
-log_format THEHOSTNAME_format '$remote_addr - $remote_user [$time_local] '
+log_format BASEDOMAINNAME_format '$remote_addr - $remote_user [$time_local] '
 		   '"$request" $status $body_bytes_sent '
 		   '"$http_referer" "$http_user_agent"';
 
@@ -26,8 +26,8 @@ server {
 	listen 80;
 	listen [::]:80;
 
-	access_log /var/log/nginx/$host.access_log THEHOSTNAME_format;
-	error_log /var/log/nginx/THEHOSTNAME.error_log warn;
+	access_log /var/log/nginx/$host.access_log BASEDOMAINNAME_format;
+	error_log /var/log/nginx/BASEDOMAINNAME.error_log warn;
 
 	# SSL configuration
 	#
@@ -50,7 +50,7 @@ server {
 	# Add index.php to the list if you are using PHP
 	index index.html ;
 
-	server_name THEHOSTNAME;
+	server_name .BASEDOMAINNAME;
 
 	location / {
 		# First attempt to serve request as file, then

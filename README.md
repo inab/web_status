@@ -61,14 +61,25 @@ domain names which are on hold.
   ```
 
 4. Create a file at `/etc/nginx/sites-available` with the name of the domain
-  which is on hold. File <nginx-site-template> can be used as template.
-  Then, you have to change all the occurrences of `THEHOSTNAME` to the real
-  domain name to be served:
+  (or wildcard domain) which is on hold. File <nginx-site-template> can be used as template
+  for single domains, meanwhile file <nginx-site-template-wildcard> is preferred for
+  multiple subdomains.
+
+  a. For a single domain, you have to change all the occurrences of `THEHOSTNAME` to the real
+    domain name to be served:
   
-  ```bash
-  sudo cp /var/www/web_status /etc/nginx/sites-available/platform.eucanimage.eu
-  sudo sed -i 's/THEHOSTNAME/platform.eucanimage.eu/g' /etc/nginx/sites-available/platform.eucanimage.eu
-  ```
+    ```bash
+    sudo cp /var/www/web_status/nginx-site-template /etc/nginx/sites-available/platform.eucanimage.eu
+    sudo sed -i 's/THEHOSTNAME/platform.eucanimage.eu/g' /etc/nginx/sites-available/platform.eucanimage.eu
+    ```
+
+  b. For a wildcard domain, you have to change all the occurrences of `BASEDOMAINNAME` to the real
+    base domain name to be served:
+  
+    ```bash
+    sudo cp /var/www/web_status/nginx-site-template-wildcard /etc/nginx/sites-available/wildcard_openebench.bsc.es
+    sudo sed -i 's/BASEDOMAINNAME/openebench.bsc.es/g' /etc/nginx/sites-available/wildcard_openebench.bsc.es
+    ```
 
 5. Create a symlink to the declared site file, check nginx config is right, and restart nginx:
 
@@ -77,7 +88,14 @@ domain names which are on hold.
   sudo nginx -t && systemctl restart nginx
   ```
 
-6. If needed, add the logo for the domain name to `/var/www/web_status/service_down/logos/hosts`.
+  or
+
+  ```bash
+  sudo ln -s ../sites-available/wildcard_openebench.bsc.es /etc/nginx/sites-enabled
+  sudo nginx -t && systemctl restart nginx
+  ```
+
+6. If needed, add the logo(s) for the domain name(s) to `/var/www/web_status/service_down/logos/hosts`.
   In this example, files with either the name `platform.eucanimage.eu.png` or `eucanimage.eu.png`
   would work, taking the first precedence.
 
