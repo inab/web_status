@@ -61,8 +61,8 @@ domain names which are on hold.
    ```
 
 4. Create a file at `/etc/nginx/sites-available` with the name of the domain
-  (or wildcard domain) which is on hold. File <nginx-site-template> can be used as template
-  for single domains, meanwhile file <nginx-site-template-wildcard> is preferred for
+  (or wildcard domain) which is on hold. File [nginx-site-template](nginx-site-template) can be used as template
+  for single domains, meanwhile file [nginx-site-template-wildcard](nginx-site-template-wildcard) is preferred for
   multiple subdomains.
 
    * For a single domain, you have to change all the occurrences of `THEHOSTNAME` to the real
