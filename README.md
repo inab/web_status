@@ -44,56 +44,56 @@ domain names which are on hold.
 
 1. First, you have to assure nginx is installed and running.
 
-  ```bash
-  sudo apt install nginx
-  ```
+   ```bash
+   sudo apt install nginx
+   ```
 
 2. Be sure the nginx logging directory can be written by `www-data` user:
 
-  ```bash
-  sudo chown www-data /var/log/nginx
-  ```
+   ```bash
+   sudo chown www-data /var/log/nginx
+   ```
 
 3. Clone this repo in an appropriate place, giving its ownership to user `www-data`:
 
-  ```bash
-  sudo bash -c "cd /var/www ; git clone https://github.com/inab/web_status ; chown -R www-data: web_status"
-  ```
+   ```bash
+   sudo bash -c "cd /var/www ; git clone https://github.com/inab/web_status ; chown -R www-data: web_status"
+   ```
 
 4. Create a file at `/etc/nginx/sites-available` with the name of the domain
   (or wildcard domain) which is on hold. File <nginx-site-template> can be used as template
   for single domains, meanwhile file <nginx-site-template-wildcard> is preferred for
   multiple subdomains.
 
-  a. For a single domain, you have to change all the occurrences of `THEHOSTNAME` to the real
-    domain name to be served:
+   * For a single domain, you have to change all the occurrences of `THEHOSTNAME` to the real
+     domain name to be served:
   
-    ```bash
-    sudo cp /var/www/web_status/nginx-site-template /etc/nginx/sites-available/platform.eucanimage.eu
-    sudo sed -i 's/THEHOSTNAME/platform.eucanimage.eu/g' /etc/nginx/sites-available/platform.eucanimage.eu
-    ```
+     ```bash
+     sudo cp /var/www/web_status/nginx-site-template /etc/nginx/sites-available/platform.eucanimage.eu
+     sudo sed -i 's/THEHOSTNAME/platform.eucanimage.eu/g' /etc/nginx/sites-available/platform.eucanimage.eu
+     ```
 
-  b. For a wildcard domain, you have to change all the occurrences of `BASEDOMAINNAME` to the real
-    base domain name to be served:
+   * For a wildcard domain, you have to change all the occurrences of `BASEDOMAINNAME` to the real
+     base domain name to be served:
   
-    ```bash
-    sudo cp /var/www/web_status/nginx-site-template-wildcard /etc/nginx/sites-available/wildcard_openebench.bsc.es
-    sudo sed -i 's/BASEDOMAINNAME/openebench.bsc.es/g' /etc/nginx/sites-available/wildcard_openebench.bsc.es
-    ```
+     ```bash
+     sudo cp /var/www/web_status/nginx-site-template-wildcard /etc/nginx/sites-available/wildcard_openebench.bsc.es
+     sudo sed -i 's/BASEDOMAINNAME/openebench.bsc.es/g' /etc/nginx/sites-available/wildcard_openebench.bsc.es
+     ```
 
 5. Create a symlink to the declared site file, check nginx config is right, and restart nginx:
 
-  ```bash
-  sudo ln -s ../sites-available/platform.eucanimage.eu /etc/nginx/sites-enabled
-  sudo nginx -t && systemctl restart nginx
-  ```
+   ```bash
+   sudo ln -s ../sites-available/platform.eucanimage.eu /etc/nginx/sites-enabled
+   sudo nginx -t && systemctl restart nginx
+   ```
 
-  or
+   or
 
-  ```bash
-  sudo ln -s ../sites-available/wildcard_openebench.bsc.es /etc/nginx/sites-enabled
-  sudo nginx -t && systemctl restart nginx
-  ```
+   ```bash
+   sudo ln -s ../sites-available/wildcard_openebench.bsc.es /etc/nginx/sites-enabled
+   sudo nginx -t && systemctl restart nginx
+   ```
 
 6. If needed, add the logo(s) for the domain name(s) to `/var/www/web_status/service_down/logos/hosts`.
   In this example, files with either the name `platform.eucanimage.eu.png` or `eucanimage.eu.png`
