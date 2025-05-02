@@ -27,7 +27,7 @@ server {
 	listen [::]:80;
 
 	access_log /var/log/nginx/$host.access_log custom;
-	error_log /var/log/nginx/platform.eucanimage.eu.error_log warn;
+	error_log /var/log/nginx/THEHOSTNAME.error_log warn;
 
 	# SSL configuration
 	#
@@ -50,7 +50,7 @@ server {
 	# Add index.php to the list if you are using PHP
 	index index.html ;
 
-	server_name platform.eucanimage.eu;
+	server_name THEHOSTNAME;
 
 	location / {
 		# First attempt to serve request as file, then
