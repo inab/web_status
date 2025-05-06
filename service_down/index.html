@@ -79,7 +79,7 @@
     
     <h1 id="message">The service at <span class="domain" id="domain"></span> is currently unavailable.</h1>
     <div class="image-wrapper">
-      <img src="image_service.jpg" alt="Service unavailable">
+      <img src="/image_service.jpg" alt="Service unavailable">
     </div>
     <div class="left-text">
       <h4>We are working on it</h4>
@@ -90,8 +90,8 @@
     </div>
   </div>
   <footer>
-    <img class="footer-logo" src="logos/bsc.png" alt="BSC Logo">
-    <img class="footer-logo" src="logos/elixir.png" alt="INB ELIXIR-ES Logo">
+    <img class="footer-logo" src="/logos/bsc.png" alt="BSC Logo">
+    <img class="footer-logo" src="/logos/elixir.png" alt="INB ELIXIR-ES Logo">
   </footer>
 
   <script type="module">
@@ -106,8 +106,9 @@
       dynamicLogo.alt = 'Logo for ' + hostname;
     
       let dotpos = 0;
-      for(dotpos = hostname.indexOf(".", dotpos)+1; dotpos >= 1; dotpos = hostname.indexOf(".", dotpos)+1) {
-        const logoPath = 'logos/hosts/' + hostname.substr(dotpos) + '.png';
+      const dothostname = "." + hostname;
+      for(dotpos = dothostname.indexOf(".", dotpos)+1; dotpos >= 1; dotpos = dothostname.indexOf(".", dotpos)+1) {
+        const logoPath = 'logos/hosts/' + dothostname.substr(dotpos) + '.png';
         const logoURL = new URL(logoPath, window.location).href;
         try {
           const response = await fetch(logoURL, {
@@ -121,7 +122,7 @@
           dynamicLogo.src = logoURL;
           break;
         } catch(error) {
-          console.log("No logo for " + hostname.substr(dotpos));
+          console.log("No logo for " + dothostname.substr(dotpos));
           console.error(error);
         }
       }

@@ -26,6 +26,11 @@ server {
 	listen 80;
 	listen [::]:80;
 
+	listen 443;
+	listen [::]:443;
+	# This one should have the declarations of SSL
+	include snippets/wildcard_BASEDOMAINNAME.conf;
+
 	access_log /var/log/nginx/$host.access_log BASEDOMAINNAME_format;
 	error_log /var/log/nginx/BASEDOMAINNAME.error_log warn;
 
@@ -52,20 +57,30 @@ server {
 
 	server_name .BASEDOMAINNAME;
 
-	location / {
-		# First attempt to serve request as file, then
-		# as directory, then fall back to displaying a 404.
-		#try_files $uri $uri/ =404;
-		try_files $uri /index.html @redirect;
-	}
+        location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                #try_files $uri $uri/ =404;
+                return 503;
+        }
 
-	location /logos {
-		try_files $uri $uri/ =404;
-	}
+        error_page 503 @maintenance;
 
-	location @redirect {
-		rewrite ^/.+$ / redirect;
-	}
+        location /image_service.jpg {
+                try_files $uri =404;
+        }
+
+        location /logos {
+                try_files $uri $uri/ =404;
+        }
+
+        location @redirect {
+                rewrite ^/.+$ / redirect;
+        }
+
+        location @maintenance {
+                rewrite ^(.*)$ /index.html break;
+        }
 
 	# pass PHP scripts to FastCGI server
 	#

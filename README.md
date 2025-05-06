@@ -81,7 +81,16 @@ domain names which are on hold.
      sudo sed -i 's/BASEDOMAINNAME/openebench.bsc.es/g' /etc/nginx/sites-available/wildcard_openebench.bsc.es
      ```
 
-5. Create a symlink to the declared site file, check nginx config is right, and restart nginx:
+5. Create a file with either the name `/etc/nginx/snippets/THEHOSTNAME.conf` (substituting THEHOSTNAME for the DNS entry)
+   or `/etc/nginx/snippets/wildcard_BASEDOMAINNAME.conf` (substituting BASEDOMAINNAME for the DNS subdomain),
+   holding the common declarations, like SSL certificates and so. This is a sample content of the file:
+   
+   ```apache
+   ssl_certificate     /etc/nginx/certs/openebench/openebench.bsc.es.pem;
+   ssl_certificate_key /etc/nginx/certs/openebench/openebench.bsc.es.decrypt.key;
+   ```
+
+6. Create a symlink to the declared site file, check nginx config is right, and restart nginx:
 
    ```bash
    sudo ln -s ../sites-available/platform.eucanimage.eu /etc/nginx/sites-enabled
@@ -95,7 +104,7 @@ domain names which are on hold.
    sudo nginx -t && systemctl restart nginx
    ```
 
-6. If needed, add the logo(s) for the domain name(s) to `/var/www/web_status/service_down/logos/hosts`.
+7. If needed, add the logo(s) for the domain name(s) to `/var/www/web_status/service_down/logos/hosts`.
   In this example, files with either the name `platform.eucanimage.eu.png` or `eucanimage.eu.png`
   would work, taking the first precedence.
 

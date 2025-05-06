@@ -29,6 +29,11 @@ server {
 	access_log /var/log/nginx/$host.access_log THEHOSTNAME_format;
 	error_log /var/log/nginx/THEHOSTNAME.error_log warn;
 
+	listen 443;
+	listen [::]:443;
+	# This one should have the declarations of SSL
+	include snippets/THEHOSTNAME.conf;
+
 	# SSL configuration
 	#
 	# listen 443 ssl default_server;
