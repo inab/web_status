@@ -108,7 +108,7 @@
       let dotpos = 0;
       const dothostname = "." + hostname;
       for(dotpos = dothostname.indexOf(".", dotpos)+1; dotpos >= 1; dotpos = dothostname.indexOf(".", dotpos)+1) {
-        const logoPath = 'logos/hosts/' + dothostname.substr(dotpos) + '.png';
+        const logoPath = '/logos/hosts/' + dothostname.substr(dotpos) + '.png';
         const logoURL = new URL(logoPath, window.location).href;
         try {
           const response = await fetch(logoURL, {
