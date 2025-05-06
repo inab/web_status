@@ -111,6 +111,46 @@ domain names which are on hold.
   In this example, files with either the name `platform.eucanimage.eu.png` or `eucanimage.eu.png`
   would work, taking the first precedence.
 
+## Hooking this repository to Apache site declaration
+
+These instructions are assuming you are going to use Apache 2.4 to serve the
+domain names which are on hold.
+
+1. First, you have to assure Apache is installed and running.
+
+   ```bash
+   sudo apt install apache2
+   ```
+
+2. Clone this repo in an appropriate place, giving its ownership to user `www-data`:
+
+   ```bash
+   sudo bash -c "cd /var/www ; git clone https://github.com/inab/web_status ; chown -R www-data: web_status"
+   ```
+
+3. Create a file at `/etc/apache2/sites-available` with the name of the domain
+  (or wildcard domain) which is on hold , and extension `.conf`. File [apache-site-template.conf](apache-site-template.conf) can be used as template
+  for single domains.
+
+   * You have to change all the occurrences of `THEHOSTNAME` to the real
+     domain name to be served:
+  
+     ```bash
+     sudo cp /var/www/web_status/apache-site-template.conf /etc/apache2/sites-available/test.inb.bsc.es.conf
+     sudo sed -i 's/THEHOSTNAME/test.inb.bsc.es/g' /etc/apache2/sites-available/test.inb.bsc.es.conf
+     ```
+
+4. Create a symlink to the declared site file, check Apache config is right, and restart Apache:
+
+   ```bash
+   sudo ln -s ../sites-available/test.inb.bsc.es.conf /etc/apache2/sites-enabled
+   sudo apache2ctl configtest && systemctl reload apache2
+   ```
+
+5. If needed, add the logo(s) for the domain name(s) to `/var/www/web_status/service_down/logos/hosts`.
+  In this example, files with either the name `test.inb.bsc.es.png` or `inb.bsc.es.png`
+  would work, taking the first precedence.
+
 ## 🙌 Acknowledgments
 
 - Barcelona Supercomputing Center (BSC)
