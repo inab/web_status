@@ -18,7 +18,7 @@
 
 # Default server configuration
 #
-log_format BASEDOMAINNAME_format '$remote_addr - $remote_user [$time_local] '
+log_format wildcard_BASEDOMAINNAME_format '$remote_addr - $remote_user [$time_local] '
 		   '"$request" $status $body_bytes_sent '
 		   '"$http_referer" "$http_user_agent"';
 
@@ -31,7 +31,7 @@ server {
 	# This one should have the declarations of SSL
 	include snippets/wildcard_BASEDOMAINNAME.conf;
 
-	access_log /var/log/nginx/$host.access_log BASEDOMAINNAME_format;
+	access_log /var/log/nginx/$host.access_log wildcard_BASEDOMAINNAME_format;
 	error_log /var/log/nginx/BASEDOMAINNAME.error_log warn;
 
 	# SSL configuration
