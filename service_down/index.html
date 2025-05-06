@@ -115,12 +115,16 @@
               method: "HEAD",
               mode: "same-origin",
           });
-          dynamicLogo.style.display = 'inline-block';
-          dynamicLogo.onerror = function() {
-            dynamicLogo.style.display = 'none';
-          };
-          dynamicLogo.src = logoURL;
-          break;
+          if(response.status == 200) {
+            dynamicLogo.style.display = 'inline-block';
+            dynamicLogo.onerror = function() {
+              dynamicLogo.style.display = 'none';
+            };
+            dynamicLogo.src = logoURL;
+            break;
+          } else {
+            console.log("No logo for " + dothostname.substr(dotpos));
+          }
         } catch(error) {
           console.log("No logo for " + dothostname.substr(dotpos));
           console.error(error);
