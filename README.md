@@ -86,8 +86,8 @@ domain names which are on hold.
    holding the common declarations, like SSL certificates and so. This is a sample content of the file:
    
    ```apache
-	listen 443;
-	listen [::]:443;
+	listen 443 ssl;
+	listen [::]:443 ssl;
 
    ssl_certificate     /etc/nginx/certs/openebench/openebench.bsc.es.pem;
    ssl_certificate_key /etc/nginx/certs/openebench/openebench.bsc.es.decrypt.key;
