@@ -41,25 +41,28 @@ server {
 
 	server_name THEHOSTNAME;
 
-        location / {
-                return 503;
-        }
+	location / {
+		add_header Cache-Control "no-cache, no-store, must-revalidate";
+		add_header Pragma "no-cache";
+		add_header Expires 0;
+		return 503;
+	}
 
-        error_page 503 @maintenance;
+	error_page 503 @maintenance;
 
-        location /image_service.jpg {
-                try_files $uri =404;
-        }
+	location /image_service.jpg {
+		try_files $uri =404;
+	}
 
-        location /logos {
-                try_files $uri $uri/ =404;
-        }
+	location /logos {
+		try_files $uri $uri/ =404;
+	}
 
-        location @redirect {
-                rewrite ^/.+$ / redirect;
-        }
+	location @redirect {
+		rewrite ^/.+$ / redirect;
+	}
 
-        location @maintenance {
-                rewrite ^(.*)$ /index.html break;
-        }
+	location @maintenance {
+		rewrite ^(.*)$ /index.html break;
+	}
 }
